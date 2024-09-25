@@ -1,6 +1,27 @@
+"use client"
 import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import HeroSectionMobile from './HeroSectionMobile';
 
 export default function HeroSection() {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  if(isMobile){
+    return <HeroSectionMobile/>
+  }
+
   return (
     <div className="relative flex items-center justify-between min-h-screen text-white px-8 gap-8">
       <nav className="fixed top-0 left-1/2 transform -translate-x-1/2 mt-2 flex space-x-4 pt-4 bg-opacity-75 py-2 px-4 rounded-lg">
